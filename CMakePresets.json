@@ -1,0 +1,39 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 18,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "cfsm-gen",
+      "description": "Compile time FSM generator.",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-debug",
+      "configurePreset": "cfsm-gen",
+      "inheritConfigureEnvironment": true,
+      "configuration": "Debug"
+    },
+    {
+      "name": "build-release",
+      "configurePreset": "cfsm-gen",
+      "inheritConfigureEnvironment": true,
+      "configuration": "Release"
+    },
+    {
+      "name": "build-clean-release",
+      "inherits": "build-release",
+      "cleanFirst": true
+    }
+  ]
+}
