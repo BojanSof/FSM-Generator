@@ -24,11 +24,12 @@ namespace Fsm
         if constexpr (I == sizeof...(Ts)) return {};
         else
         {
-          if (std::tuple_element<I, decltype(tup)>::type::stateFrom == currentState 
-              && std::tuple_element<I, decltype(tup)>::type::EventType::id() == EventT::id())
+          typedef typename std::tuple_element<I, decltype(tup)>::type TransitionType;
+          if (TransitionType::stateFrom == currentState 
+              && TransitionType::EventType::id() == EventT::id())
           {
-            std::tuple_element<I, decltype(tup)>::type::action(event);
-            return std::tuple_element<I, decltype(tup)>::type::stateTo;
+            TransitionType::action(static_cast<const typename TransitionType::EventType&>(static_cast<const EventBase&>(event)));
+            return TransitionType::stateTo;
           }
           else
             return getNextState<I + 1>(tup, currentState, event);
