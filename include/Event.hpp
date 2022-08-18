@@ -17,7 +17,7 @@ namespace Fsm
   template <typename DerivedEventT>
   struct Event : public EventBase
   {
-    static std::size_t id() const
+    static std::size_t id()
     {
       static std::size_t id = EventBase::next();
       return id;
