@@ -15,10 +15,10 @@ target_include_directories(cfsm-generator INTERFACE
 )
 target_sources(cfsm-generator
   INTERFACE
-    "FsmGenerator.hpp"
-    "Transition.hpp"
-    "TransitionTable.hpp"
-    "Event.hpp"
+    "include/FsmGenerator.hpp"
+    "include/Event.hpp"
+    "include/internal/TransitionTable.hpp"
+    "include/internal/Transition.hpp"
 )
 
 add_subdirectory(examples)

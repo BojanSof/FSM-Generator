@@ -6,20 +6,20 @@
 
 namespace Fsm
 {
-  template <typename StateT, typename... Transitions>
+  template <typename FsmT, typename StateT, typename... Transitions>
   class TransitionTable
   {
     public:
       template <typename EventT>
-      static std::optional<StateT> makeTransition(const StateT currentState, const EventT &event)
+      static std::optional<StateT> makeTransition(FsmT &fsm, const StateT currentState, const EventT &event)
       {
         static constexpr std::tuple<Transitions...> transitionsTuple{Transitions()...};
-        return getNextState(transitionsTuple, currentState, event);
+        return getNextState(fsm, transitionsTuple, currentState, event);
       }
 
     private:
       template <std::size_t I = 0, typename EventT, typename... Ts>
-      static std::optional<StateT> getNextState(std::tuple<Ts...> tup, const StateT &currentState, const EventT &event)
+      static std::optional<StateT> getNextState(FsmT &fsm, std::tuple<Ts...> tup, const StateT &currentState, const EventT &event)
       {
         if constexpr (I == sizeof...(Ts)) return {};
         else
@@ -28,11 +28,11 @@ namespace Fsm
           if (TransitionType::stateFrom == currentState 
               && TransitionType::EventType::id() == EventT::id())
           {
-            TransitionType::action(static_cast<const typename TransitionType::EventType&>(static_cast<const EventBase&>(event)));
+            (fsm.*TransitionType::action)(static_cast<const typename TransitionType::EventType&>(static_cast<const EventBase&>(event)));
             return TransitionType::stateTo;
           }
           else
-            return getNextState<I + 1>(tup, currentState, event);
+            return getNextState<I + 1>(fsm, tup, currentState, event);
         }
       }
     public:

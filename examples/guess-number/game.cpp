@@ -1,15 +1,31 @@
-#include "FsmGenerator.hpp"
 #include <iostream>
 #include <random>
 
+#include <FsmGenerator.hpp>
+
 using namespace Fsm;
+
+class GuessNumberFsm;
+
+template<>
+struct Fsm::States<GuessNumberFsm>
+{
+  enum class State
+  {
+    InvalidState,
+    WaitForInput,
+    CheckInput,
+    End
+  };
+};
 
 class GuessNumberFsm
   : public FsmGenerator<GuessNumberFsm>
 {
   public:
-    bool running = true;
-    GuessNumberFsm()
+    using State = typename States<GuessNumberFsm>::State;
+
+    GuessNumberFsm() : FsmGenerator(State::CheckInput), running(true)
     {
       std::mt19937 rng(std::random_device{}());
       auto dist = std::uniform_int_distribution<unsigned int>(1, 100);
@@ -18,48 +34,45 @@ class GuessNumberFsm
 
     void run()
     {
-      std::cout << "Welcome to Guess the number. Enter number between 1 and 100. You have 10 tries" << std::endl;
-      setState(State::CheckInput);
-      processEvent(RetryEvent{});
+      std::cout << "Welcome to Guess the number." << std::endl;
+      while(running)
+      {
+        processEvent(RetryEvent{});
+        InputEvent in;
+        in.number = input;
+        processEvent(in);
+        if(!running) processEvent(EndEvent{});
+      }
     }
   private:
-    unsigned int num;
+    unsigned int num, input;
+    bool running;
   private:
     friend class FsmGenerator<GuessNumberFsm>;
-    enum class State
-    {
-      WaitForInput,
-      CheckInput,
-      End
-    };
 
-    struct InputEvent
-      : public Event<InputEvent>
+    struct InputEvent : public Event<InputEvent>
     {
       unsigned int number;
     };
-
-    struct RetryEvent
-      : public Event<RetryEvent>
-    {};
-
-    struct EndEvent
-      : public Event<EndEvent>
-    {
-    };
+    struct RetryEvent : public Event<RetryEvent> {};
+    struct EndEvent : public Event<EndEvent> {};
 
     void doWaitForInputCheckInput(const InputEvent& e)
     {
-      if(e.number == num) processEvent(EndEvent{});
-      else processEvent(RetryEvent{});
+      if(e.number != num)
+      {
+        std::cout << ((e.number < num) ? "Low, enter higher number." : "High, enter lower number.") << std::endl;
+      }
+      else
+      {
+        running = false;
+      }
     }
 
     void doCheckInputWaitForInput(const RetryEvent& e)
     {
-      InputEvent in;
       std::cout << "Enter number between 1 and 100: ";
-      std::cin >> in.number;
-      processEvent(in);
+      std::cin >> input;
     }
 
     void doCheckInputStop(const EndEvent& e)
@@ -68,10 +81,9 @@ class GuessNumberFsm
     }
 
     typedef TransitionTable<
-      State
-      , Transition<State, InputEvent, State::WaitForInput, State::CheckInput, doWaitForInputCheckInput>
-      , Transition<State, RetryEvent, State::CheckInput, State::WaitForInput, doCheckInputWaitForInput>
-      , Transition<State, EndEvent, State::CheckInput, State::End, doCheckInputStop>
+      Transition<InputEvent, State::WaitForInput, State::CheckInput, &GuessNumberFsm::doWaitForInputCheckInput>
+      , Transition<RetryEvent, State::CheckInput, State::WaitForInput, &GuessNumberFsm::doCheckInputWaitForInput>
+      , Transition<EndEvent, State::CheckInput, State::End, &GuessNumberFsm::doCheckInputStop>
     > Table;
 };
 

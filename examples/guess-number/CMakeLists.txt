@@ -5,4 +5,4 @@ target_sources(guess-number
   PRIVATE
     game.cpp
 )
-target_link_libraries(guess-number PRIVATE cfsm-gen)
+target_link_libraries(guess-number PRIVATE cfsm-generator)

@@ -7,6 +7,7 @@ namespace Fsm
    * @brief Structure representing single
    * row of the transitions look-up table.
    * 
+   * @tparam T Type of the state machine
    * @tparam StateT State type
    * @tparam EventT Event type
    * @tparam StateFrom Current state of the FSM
@@ -15,11 +16,12 @@ namespace Fsm
    * take during the transition
    */
   template <
-    typename StateT
+    typename T
+    , typename StateT
     , typename EventT
     , StateT StateFrom
     , StateT StateTo
-    , void (*Action)(const EventT& e) >
+    , void (T::*Action)(const EventT& e) >
   struct Transition
   {
     typedef EventT EventType;
