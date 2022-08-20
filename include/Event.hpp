@@ -3,17 +3,15 @@
 
 #include <cstddef>
 
+#include "internal/EventBase.hpp"
+
 namespace Fsm
 {
-  struct EventBase
-  {
-    static std::size_t next()
-    {
-      static std::size_t counter = 0;
-      return counter++;
-    }
-  };
-
+  /**
+   * @brief Base class for all user events.
+   * 
+   * @tparam DerivedEventT The type of the derived event
+   */
   template <typename DerivedEventT>
   struct Event : public EventBase
   {

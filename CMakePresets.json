@@ -14,6 +14,9 @@
       "architecture": {
         "value": "x64",
         "strategy": "external"
+      },
+      "cacheVariables": {
+        "BUILD_EXAMPLES": "ON"
       }
     }
   ],

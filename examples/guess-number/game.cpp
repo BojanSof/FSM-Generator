@@ -71,12 +71,14 @@ class GuessNumberFsm
 
     void doCheckInputWaitForInput(const RetryEvent& e)
     {
+      (void)e;
       std::cout << "Enter number between 1 and 100: ";
       std::cin >> input;
     }
 
     void doCheckInputStop(const EndEvent& e)
     {
+      (void)e;
       std::cout << "Congrats! Bye." << std::endl;
     }
 

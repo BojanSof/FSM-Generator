@@ -6,7 +6,7 @@ project (
   DESCRIPTION "Compile-time FSM generator"
 	LANGUAGES C CXX ASM)
 
-set(CMAKE_CONFIG_DIR "${CMAKE_SOURCE_DIR}/cmake")
+option(BUILD_EXAMPLES "Build examples" ON)
 
 add_library(cfsm-generator INTERFACE)
 target_compile_features(cfsm-generator INTERFACE cxx_std_17)
@@ -17,8 +17,12 @@ target_sources(cfsm-generator
   INTERFACE
     "include/FsmGenerator.hpp"
     "include/Event.hpp"
+    "include/States.hpp"
     "include/internal/TransitionTable.hpp"
     "include/internal/Transition.hpp"
+    "include/internal/EventBase.hpp"
 )
 
-add_subdirectory(examples)
+if(BUILD_EXAMPLES)
+  add_subdirectory(examples)
+endif(BUILD_EXAMPLES)
