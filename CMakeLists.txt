@@ -6,7 +6,7 @@ project (
   DESCRIPTION "Compile-time FSM generator"
 	LANGUAGES C CXX ASM)
 
-option(BUILD_EXAMPLES "Build examples" ON)
+option(FSM_GENERATOR_BUILD_EXAMPLES "Build examples" ON)
 
 add_library(cfsm-generator INTERFACE)
 target_compile_features(cfsm-generator INTERFACE cxx_std_17)
@@ -23,6 +23,6 @@ target_sources(cfsm-generator
     "include/internal/EventBase.hpp"
 )
 
-if(BUILD_EXAMPLES)
+if(FSM_GENERATOR_BUILD_EXAMPLES)
   add_subdirectory(examples)
-endif(BUILD_EXAMPLES)
+endif(FSM_GENERATOR_BUILD_EXAMPLES)

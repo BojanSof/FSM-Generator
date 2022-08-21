@@ -16,7 +16,7 @@
         "strategy": "external"
       },
       "cacheVariables": {
-        "BUILD_EXAMPLES": "ON"
+        "FSM_GENERATOR_BUILD_EXAMPLES": "ON"
       }
     }
   ],
