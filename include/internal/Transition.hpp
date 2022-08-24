@@ -24,8 +24,8 @@ namespace Fsm
     , void (T::*Action)(const EventT& e) >
   struct Transition
   {
-    typedef EventT EventType;
-    typedef StateT StateType;
+    using EventType = EventT;
+    using StateType = StateT;
     static constexpr StateT stateFrom = StateFrom;
     static constexpr StateT stateTo = StateTo;
     static constexpr auto action = Action;

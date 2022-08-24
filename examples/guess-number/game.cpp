@@ -82,11 +82,11 @@ class GuessNumberFsm
       std::cout << "Congrats! Bye." << std::endl;
     }
 
-    typedef TransitionTable<
+    using Table = TransitionTable<
       Transition<InputEvent, State::WaitForInput, State::CheckInput, &GuessNumberFsm::doWaitForInputCheckInput>
       , Transition<RetryEvent, State::CheckInput, State::WaitForInput, &GuessNumberFsm::doCheckInputWaitForInput>
       , Transition<EndEvent, State::CheckInput, State::End, &GuessNumberFsm::doCheckInputStop>
-    > Table;
+    >;
 };
 
 int main()

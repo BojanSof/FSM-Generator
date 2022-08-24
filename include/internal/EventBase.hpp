@@ -6,20 +6,15 @@
 namespace Fsm
 {
   /**
-   * Base class for the events used for providing
-   * the unique ID for each event, with goal of
-   * eliminating the need of runtime polymorphism
-   * to check event type.
+   * Base class for the events aiming to
+   * eliminate the need of runtime polymorphism
+   * to check event type. This is achived by up-casting
+   * to this type and then down-casting to the specific
+   * event type.
    * 
    */
   struct EventBase
   {
-    protected:
-      static std::size_t next()
-      {
-        static std::size_t counter = 0;
-        return counter++;
-      }
   };
 }
 

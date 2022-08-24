@@ -93,10 +93,10 @@ class MyFsm : public Fsm::FsmGenerator<MyFsm>
     }
 
     // transition table
-    typedef TransitionTable<
+    using Table = TransitionTable<
       Transition<Event1, State::Initial, State::State1, &MyFsm::doInitialToState1>
       , Transition<Event2, State::State1, State::State2, &MyFsm::doState1ToState2>
-    > Table;
+    >;
 };
 ```
 

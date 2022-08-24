@@ -65,6 +65,15 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "any": "cpp",
+    "hash_map": "cpp",
+    "hash_set": "cpp",
+    "complex": "cpp",
+    "csignal": "cpp",
+    "shared_mutex": "cpp",
+    "cfenv": "cpp",
+    "typeindex": "cpp",
+    "valarray": "cpp"
   }
 }

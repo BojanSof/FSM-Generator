@@ -3,6 +3,7 @@
 
 #include <tuple>
 #include <optional>
+#include <type_traits>
 
 #include "EventBase.hpp"
 
@@ -58,9 +59,9 @@ namespace Fsm
         if constexpr (I == sizeof...(Ts)) return {};
         else
         {
-          typedef typename std::tuple_element<I, decltype(tup)>::type TransitionType;
+          using TransitionType = typename std::tuple_element_t<I, decltype(tup)>;
           if (TransitionType::stateFrom == currentState 
-              && TransitionType::EventType::id() == EventT::id())
+              && std::is_same_v<typename TransitionType::EventType, EventT>)
           {
             (fsm.*TransitionType::action)(static_cast<const typename TransitionType::EventType&>(static_cast<const EventBase&>(event)));
             return TransitionType::stateTo;

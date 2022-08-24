@@ -40,7 +40,7 @@ namespace Fsm
       template <typename EventT>
       void processEvent(const EventT& e)
       {
-        typedef typename FsmT::Table Table;
+        using Table = typename FsmT::Table;
         auto newState = Table::makeTransition(static_cast<FsmT&>(*this), currentState_, e);
         currentState_ = (newState.has_value()) ? newState.value() : StateT::InvalidState;
       }
