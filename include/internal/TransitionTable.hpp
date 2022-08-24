@@ -7,6 +7,7 @@
 
 namespace Fsm
 {
+  class Event;  //< forward declaration
   /**
    * @brief The transition table that contains and implements
    * the logic of transitioning between the states of the FSM
