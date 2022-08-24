@@ -50,12 +50,12 @@ class GuessNumberFsm
   private:
     friend class FsmGenerator<GuessNumberFsm>;
 
-    struct InputEvent : public Event<InputEvent>
+    struct InputEvent : public Event
     {
       unsigned int number;
     };
-    struct RetryEvent : public Event<RetryEvent> {};
-    struct EndEvent : public Event<EndEvent> {};
+    struct RetryEvent : public Event {};
+    struct EndEvent : public Event {};
 
     void doWaitForInputCheckInput(const InputEvent& e)
     {

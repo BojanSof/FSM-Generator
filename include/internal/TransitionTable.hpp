@@ -5,8 +5,6 @@
 #include <optional>
 #include <type_traits>
 
-#include "EventBase.hpp"
-
 namespace Fsm
 {
   /**
@@ -63,7 +61,7 @@ namespace Fsm
           if (TransitionType::stateFrom == currentState 
               && std::is_same_v<typename TransitionType::EventType, EventT>)
           {
-            (fsm.*TransitionType::action)(static_cast<const typename TransitionType::EventType&>(static_cast<const EventBase&>(event)));
+            (fsm.*TransitionType::action)(static_cast<const typename TransitionType::EventType&>(static_cast<const Event&>(event)));
             return TransitionType::stateTo;
           }
           else

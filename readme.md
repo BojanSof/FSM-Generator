@@ -70,12 +70,12 @@ class MyFsm : public Fsm::FsmGenerator<MyFsm>
   
   private:
     // events
-    struct Event1 : public Fsm::Event<Event1>
+    struct Event1 : public Fsm::Event
     {
       // Event1 specific data
       ...
     };
-    struct Event2 : public Fsm::Event<Event2>
+    struct Event2 : public Fsm::Event
     {
       // Event2 specific data
       ...

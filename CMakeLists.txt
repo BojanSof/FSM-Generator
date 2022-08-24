@@ -20,7 +20,6 @@ target_sources(cfsm-generator
     "include/States.hpp"
     "include/internal/TransitionTable.hpp"
     "include/internal/Transition.hpp"
-    "include/internal/EventBase.hpp"
 )
 
 if(FSM_GENERATOR_BUILD_EXAMPLES)
