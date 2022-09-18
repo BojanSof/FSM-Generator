@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 
-#include <FsmGenerator.hpp>
+#include <FsmGenerator/FsmGenerator.hpp>
 
 using namespace Fsm;
 
